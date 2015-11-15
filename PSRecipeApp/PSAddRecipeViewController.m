@@ -23,6 +23,7 @@ static NSString *const AddRowCellId = @"Add Row Cell";
 
 typedef NS_ENUM(NSInteger, RecipeSection) {
     RecipeSectionName,
+    RecipeSectionDescription,
     RecipeSectionMinutes,
     RecipeSectionSteps,
     RecipeSectionIngredients,
@@ -36,13 +37,14 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
     
     self.recipe = [[PSRecipe alloc] init];
     self.recipe.name = @"";
+    self.recipe.desc = @"";
     self.recipe.minutes = 0;
     self.recipe.steps = [[NSMutableArray alloc] initWithObjects:@"", nil];
     self.recipe.ingredients = [[NSMutableArray alloc] initWithObjects:@"", nil];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, 20.0)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,10 +58,6 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
     // Pass the selected object to the new view controller.
 }
 
-/* 
- DO TEXTFIELD DID CHANGE
-*/
-
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -68,6 +66,12 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
             PSTextFieldTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellId forIndexPath:indexPath];
             cell.label.text = @"Recipe Name";
             cell.textField.text = self.recipe.name;
+            return cell;
+        }
+        case RecipeSectionDescription: {
+            PSTextFieldTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellId forIndexPath:indexPath];
+            cell.label.text = @"Description";
+            cell.textField.text = self.recipe.desc;
             return cell;
         }
         case RecipeSectionMinutes: {
@@ -108,6 +112,7 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case RecipeSectionName: return 1;
+        case RecipeSectionDescription: return 1;
         case RecipeSectionMinutes: return 1;
         case RecipeSectionSteps: return self.recipe.steps.count + 1;
         case RecipeSectionIngredients: return self.recipe.ingredients.count + 1;
