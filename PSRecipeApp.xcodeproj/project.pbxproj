@@ -18,6 +18,8 @@
 		342431A81BF82290001A4763 /* PSRecipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431A71BF82290001A4763 /* PSRecipe.m */; };
 		342431AB1BF82510001A4763 /* PSRecipeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431AA1BF82510001A4763 /* PSRecipeListViewController.m */; };
 		342431AE1BF82BEA001A4763 /* PSAddRecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431AD1BF82BEA001A4763 /* PSAddRecipeViewController.m */; };
+		342431B11BF837AC001A4763 /* PSTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431B01BF837AC001A4763 /* PSTextFieldTableViewCell.m */; };
+		342431B41BF837C0001A4763 /* PSAddRowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431B31BF837C0001A4763 /* PSAddRowTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,10 +57,14 @@
 		3424319A1BF82263001A4763 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		342431A61BF82290001A4763 /* PSRecipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRecipe.h; sourceTree = "<group>"; };
 		342431A71BF82290001A4763 /* PSRecipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSRecipe.m; sourceTree = "<group>"; };
-		342431A91BF82510001A4763 /* PSRecipeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSRecipeListViewController.h; path = PSRecipeApp/PSRecipeListViewController.h; sourceTree = "<group>"; };
-		342431AA1BF82510001A4763 /* PSRecipeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSRecipeListViewController.m; path = PSRecipeApp/PSRecipeListViewController.m; sourceTree = "<group>"; };
-		342431AC1BF82BEA001A4763 /* PSAddRecipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSAddRecipeViewController.h; path = PSRecipeApp/PSAddRecipeViewController.h; sourceTree = "<group>"; };
-		342431AD1BF82BEA001A4763 /* PSAddRecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSAddRecipeViewController.m; path = PSRecipeApp/PSAddRecipeViewController.m; sourceTree = "<group>"; };
+		342431A91BF82510001A4763 /* PSRecipeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRecipeListViewController.h; sourceTree = "<group>"; };
+		342431AA1BF82510001A4763 /* PSRecipeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSRecipeListViewController.m; sourceTree = "<group>"; };
+		342431AC1BF82BEA001A4763 /* PSAddRecipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAddRecipeViewController.h; sourceTree = "<group>"; };
+		342431AD1BF82BEA001A4763 /* PSAddRecipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAddRecipeViewController.m; sourceTree = "<group>"; };
+		342431AF1BF837AC001A4763 /* PSTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTextFieldTableViewCell.h; sourceTree = "<group>"; };
+		342431B01BF837AC001A4763 /* PSTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTextFieldTableViewCell.m; sourceTree = "<group>"; };
+		342431B21BF837C0001A4763 /* PSAddRowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAddRowTableViewCell.h; sourceTree = "<group>"; };
+		342431B31BF837C0001A4763 /* PSAddRowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAddRowTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,10 +95,6 @@
 		342431641BF82263001A4763 = {
 			isa = PBXGroup;
 			children = (
-				342431A91BF82510001A4763 /* PSRecipeListViewController.h */,
-				342431AA1BF82510001A4763 /* PSRecipeListViewController.m */,
-				342431AC1BF82BEA001A4763 /* PSAddRecipeViewController.h */,
-				342431AD1BF82BEA001A4763 /* PSAddRecipeViewController.m */,
 				3424316F1BF82263001A4763 /* PSRecipeApp */,
 				3424318C1BF82263001A4763 /* PSRecipeAppTests */,
 				342431971BF82263001A4763 /* PSRecipeAppUITests */,
@@ -116,8 +118,16 @@
 				342431731BF82263001A4763 /* AppDelegate.h */,
 				342431741BF82263001A4763 /* AppDelegate.m */,
 				342431791BF82263001A4763 /* Main.storyboard */,
+				342431AC1BF82BEA001A4763 /* PSAddRecipeViewController.h */,
+				342431AD1BF82BEA001A4763 /* PSAddRecipeViewController.m */,
+				342431B21BF837C0001A4763 /* PSAddRowTableViewCell.h */,
+				342431B31BF837C0001A4763 /* PSAddRowTableViewCell.m */,
 				342431A61BF82290001A4763 /* PSRecipe.h */,
 				342431A71BF82290001A4763 /* PSRecipe.m */,
+				342431A91BF82510001A4763 /* PSRecipeListViewController.h */,
+				342431AA1BF82510001A4763 /* PSRecipeListViewController.m */,
+				342431AF1BF837AC001A4763 /* PSTextFieldTableViewCell.h */,
+				342431B01BF837AC001A4763 /* PSTextFieldTableViewCell.m */,
 				3424317F1BF82263001A4763 /* Assets.xcassets */,
 				342431811BF82263001A4763 /* LaunchScreen.storyboard */,
 				342431841BF82263001A4763 /* Info.plist */,
@@ -284,11 +294,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3424317E1BF82263001A4763 /* PSRecipeApp.xcdatamodeld in Sources */,
+				342431B41BF837C0001A4763 /* PSAddRowTableViewCell.m in Sources */,
 				342431751BF82263001A4763 /* AppDelegate.m in Sources */,
 				342431721BF82263001A4763 /* main.m in Sources */,
 				342431AB1BF82510001A4763 /* PSRecipeListViewController.m in Sources */,
 				342431A81BF82290001A4763 /* PSRecipe.m in Sources */,
 				342431AE1BF82BEA001A4763 /* PSAddRecipeViewController.m in Sources */,
+				342431B11BF837AC001A4763 /* PSTextFieldTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

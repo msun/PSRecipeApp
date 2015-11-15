@@ -11,8 +11,8 @@
 @interface PSRecipe : NSObject
 
 @property (nonatomic) NSString *name;
-@property (nonatomic) NSInteger *minutes;
-@property (nonatomic) NSArray *steps; // [NSString]
-@property (nonatomic) NSArray *ingredients; // [NSString]
+@property (nonatomic) NSInteger minutes;
+@property (nonatomic) NSMutableArray *steps; // [NSString]
+@property (nonatomic) NSMutableArray *ingredients; // [NSString]
 
 @end
