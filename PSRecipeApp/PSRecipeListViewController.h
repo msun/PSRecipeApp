@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  PSRecipeListViewController.h
 //  PSRecipeApp
 //
 //  Created by Matthew Sun on 11/14/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface PSRecipeListViewController : UIViewController
 
 @end
-
