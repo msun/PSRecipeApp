@@ -9,7 +9,7 @@
         <!--Recipes-->
         <scene sceneID="Qv8-NR-7ev">
             <objects>
-                <viewController id="RN4-py-8ab" customClass="PSRecipeListViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="RN4-py-8ab" customClass="PSRecipeListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xSZ-RX-bAB"/>
                         <viewControllerLayoutGuide type="bottom" id="HiB-iB-3a3"/>
@@ -26,6 +26,31 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sgv-ea-AnR">
                                 <rect key="frame" x="0.0" y="110" width="600" height="490"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Recipe List Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Recipe List Cell" id="CXe-F0-78j" customClass="PSRecipesListTableViewCell">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CXe-F0-78j" id="nfB-BN-koh">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8nm-vq-qOE">
+                                                    <rect key="frame" x="8" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="8nm-vq-qOE" firstAttribute="centerY" secondItem="nfB-BN-koh" secondAttribute="centerY" id="5Yx-gB-WDj"/>
+                                                <constraint firstItem="8nm-vq-qOE" firstAttribute="leading" secondItem="nfB-BN-koh" secondAttribute="leadingMargin" id="SmQ-Vg-Xq2"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="recipeNameLabel" destination="8nm-vq-qOE" id="G4u-bD-Xa6"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -147,7 +172,7 @@
                     <navigationItem key="navigationItem" title="Add Recipe" id="8f6-TB-7Md">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Uf1-HS-FQ6">
                             <connections>
-                                <action selector="saveTapped:" destination="WTi-nT-Fxd" id="pbb-tj-lSw"/>
+                                <segue destination="iNi-Ez-oCj" kind="unwind" identifier="unwindFromAddRecipeToRecipeList" unwindAction="unwindToRecipeListViewController:" id="aXt-Kw-v7y"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -156,6 +181,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cHt-lB-lNJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="iNi-Ez-oCj" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1623" y="1160"/>
         </scene>

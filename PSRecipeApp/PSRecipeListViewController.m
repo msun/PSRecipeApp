@@ -7,6 +7,10 @@
 //
 
 #import "PSRecipeListViewController.h"
+#import "PSRecipesListTableViewCell.h"
+#import "PSRecipeManager.h"
+
+static NSString *const RecipeListCellId = @"Recipe List Cell";
 
 @interface PSRecipeListViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
@@ -36,14 +40,24 @@
     // Pass the selected object to the new view controller.
 }
 
+- (IBAction)unwindToRecipeListViewController:(UIStoryboardSegue *)unwindSegue {
+    NSLog(@"Unwind to RecipeListViewController");
+    [self.tableView reloadData];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    PSRecipesListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:RecipeListCellId forIndexPath:indexPath];
+    PSRecipe *recipe = [[[PSRecipeManager sharedManager] getRecipes] objectAtIndex:indexPath.row];
+    
+    cell.recipeNameLabel.text = recipe.name;
+
+    return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return [[PSRecipeManager sharedManager] getRecipes].count;
 }
 
 #pragma mark - UITableViewDelegate

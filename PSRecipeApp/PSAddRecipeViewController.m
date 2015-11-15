@@ -7,9 +7,10 @@
 //
 
 #import "PSAddRecipeViewController.h"
-#import "PSRecipe.h"
-#import "PSTextFieldTableViewCell.h"
 #import "PSAddRowTableViewCell.h"
+#import "PSRecipe.h"
+#import "PSRecipeManager.h"
+#import "PSTextFieldTableViewCell.h"
 
 static NSString *const TextFieldCellId = @"Text Field Cell";
 static NSString *const AddRowCellId = @"Add Row Cell";
@@ -54,8 +55,9 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([[segue identifier] isEqualToString:@"unwindFromAddRecipeToRecipeList"]) {
+        [[PSRecipeManager sharedManager] addRecipe:self.recipe];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -172,12 +174,6 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
         default:
             break;
     }
-}
-
-#pragma mark - IBActions
-
-- (IBAction)saveTapped:(id)sender {
-    NSLog(@"save tapped");
 }
 
 @end

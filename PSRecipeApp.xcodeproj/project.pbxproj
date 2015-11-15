@@ -20,6 +20,8 @@
 		342431AE1BF82BEA001A4763 /* PSAddRecipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431AD1BF82BEA001A4763 /* PSAddRecipeViewController.m */; };
 		342431B11BF837AC001A4763 /* PSTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431B01BF837AC001A4763 /* PSTextFieldTableViewCell.m */; };
 		342431B41BF837C0001A4763 /* PSAddRowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431B31BF837C0001A4763 /* PSAddRowTableViewCell.m */; };
+		342431B71BF86CF0001A4763 /* PSRecipeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431B61BF86CF0001A4763 /* PSRecipeManager.m */; };
+		342431BA1BF8753F001A4763 /* PSRecipesListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431B91BF8753F001A4763 /* PSRecipesListTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,10 @@
 		342431B01BF837AC001A4763 /* PSTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTextFieldTableViewCell.m; sourceTree = "<group>"; };
 		342431B21BF837C0001A4763 /* PSAddRowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAddRowTableViewCell.h; sourceTree = "<group>"; };
 		342431B31BF837C0001A4763 /* PSAddRowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAddRowTableViewCell.m; sourceTree = "<group>"; };
+		342431B51BF86CF0001A4763 /* PSRecipeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRecipeManager.h; sourceTree = "<group>"; };
+		342431B61BF86CF0001A4763 /* PSRecipeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSRecipeManager.m; sourceTree = "<group>"; };
+		342431B81BF8753F001A4763 /* PSRecipesListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRecipesListTableViewCell.h; sourceTree = "<group>"; };
+		342431B91BF8753F001A4763 /* PSRecipesListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSRecipesListTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,8 +130,12 @@
 				342431B31BF837C0001A4763 /* PSAddRowTableViewCell.m */,
 				342431A61BF82290001A4763 /* PSRecipe.h */,
 				342431A71BF82290001A4763 /* PSRecipe.m */,
+				342431B81BF8753F001A4763 /* PSRecipesListTableViewCell.h */,
+				342431B91BF8753F001A4763 /* PSRecipesListTableViewCell.m */,
 				342431A91BF82510001A4763 /* PSRecipeListViewController.h */,
 				342431AA1BF82510001A4763 /* PSRecipeListViewController.m */,
+				342431B51BF86CF0001A4763 /* PSRecipeManager.h */,
+				342431B61BF86CF0001A4763 /* PSRecipeManager.m */,
 				342431AF1BF837AC001A4763 /* PSTextFieldTableViewCell.h */,
 				342431B01BF837AC001A4763 /* PSTextFieldTableViewCell.m */,
 				3424317F1BF82263001A4763 /* Assets.xcassets */,
@@ -295,11 +305,13 @@
 			files = (
 				3424317E1BF82263001A4763 /* PSRecipeApp.xcdatamodeld in Sources */,
 				342431B41BF837C0001A4763 /* PSAddRowTableViewCell.m in Sources */,
+				342431BA1BF8753F001A4763 /* PSRecipesListTableViewCell.m in Sources */,
 				342431751BF82263001A4763 /* AppDelegate.m in Sources */,
 				342431721BF82263001A4763 /* main.m in Sources */,
 				342431AB1BF82510001A4763 /* PSRecipeListViewController.m in Sources */,
 				342431A81BF82290001A4763 /* PSRecipe.m in Sources */,
 				342431AE1BF82BEA001A4763 /* PSAddRecipeViewController.m in Sources */,
+				342431B71BF86CF0001A4763 /* PSRecipeManager.m in Sources */,
 				342431B11BF837AC001A4763 /* PSTextFieldTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
