@@ -152,6 +152,23 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
     return RecipeSectionCount;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case RecipeSectionSteps:
+            if (indexPath.row >= self.recipe.steps.count) return NO;
+            return YES;
+        case RecipeSectionIngredients:
+            if (indexPath.row >= self.recipe.ingredients.count) return NO;
+            return YES;
+        default:
+            return NO;
+    }
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -174,6 +191,40 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
         default:
             break;
     }
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case RecipeSectionSteps:
+            break;
+        case RecipeSectionIngredients:
+            break;
+        default:
+            return @[];
+    }
+
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive
+                                                                            title:@"Delete"
+        handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+            switch (indexPath.section) {
+                case RecipeSectionSteps:
+                    if (indexPath.row >= self.recipe.steps.count) break;
+                    [self.recipe.steps removeObjectAtIndex:indexPath.row];
+                    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                    [self.tableView reloadData];
+                    break;
+                case RecipeSectionIngredients:
+                    if (indexPath.row >= self.recipe.ingredients.count) break;
+                    [self.recipe.ingredients removeObjectAtIndex:indexPath.row];
+                    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                    [self.tableView reloadData];
+                    break;
+                default:
+                    break;
+            }
+    }];
+    
+    return @[deleteAction];
 }
 
 @end

@@ -15,5 +15,6 @@
 
 - (NSArray *)getRecipes;
 - (void)addRecipe:(PSRecipe *)recipe;
+- (void)deleteRecipe:(PSRecipe *)recipe;
 
 @end

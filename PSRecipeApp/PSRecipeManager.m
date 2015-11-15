@@ -40,4 +40,8 @@
     [self.recipes addObject:recipe];
 }
 
+- (void)deleteRecipe:(PSRecipe *)recipe {
+    [self.recipes removeObject:recipe];
+}
+
 @end

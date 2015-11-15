@@ -60,10 +60,26 @@ static NSString *const RecipeListCellId = @"Recipe List Cell";
     return [[PSRecipeManager sharedManager] getRecipes].count;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive
+                                                                            title:@"Delete"
+                                                                          handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        PSRecipe *recipe = [[PSRecipeManager sharedManager] getRecipes][indexPath.row];
+        [[PSRecipeManager sharedManager] deleteRecipe:recipe];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
+    
+    return @[deleteAction];
 }
 
 @end
