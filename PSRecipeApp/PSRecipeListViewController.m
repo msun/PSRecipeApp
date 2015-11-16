@@ -13,6 +13,7 @@
 
 static NSString *const RecipeListCellId = @"Recipe List Cell";
 static NSString *const RecipeIconBlank = @"recipe-icon-blank";
+static NSString *const ToAddRecipe = @"RecipesListToAddRecipeSegue";
 static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
 
 @interface PSRecipeListViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -42,7 +43,9 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:ToEditRecipe]) {
+    if ([segue.identifier isEqualToString:ToAddRecipe]) {
+
+    } else if ([segue.identifier isEqualToString:ToEditRecipe]) {
         PSAddRecipeViewController *vc = [segue destinationViewController];
         vc.isEditing = YES;
         vc.recipe = self.currentRecipe;
@@ -50,7 +53,6 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
 }
 
 - (IBAction)unwindToRecipeListViewController:(UIStoryboardSegue *)unwindSegue {
-    NSLog(@"Unwind to RecipeListViewController");
     [self.tableView reloadData];
 }
 
@@ -93,14 +95,6 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
     }];
     
     return @[deleteAction];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewAutomaticDimension;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return self.tableView.rowHeight;;
 }
 
 @end

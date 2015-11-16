@@ -15,8 +15,8 @@ static NSString *const ImageCellId = @"Image Cell";
                                       UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic) UIImagePickerController *imagePicker;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addImageButton;
+@property (nonatomic) UIImagePickerController *imagePicker;
 
 @end
 
@@ -107,20 +107,26 @@ static NSString *const ImageCellId = @"Image Cell";
     if (self.imagePicker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
         UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(showCamera:)];
         viewController.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:button];
-    } else {
+    } else if (self.imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStylePlain target:self action:@selector(showLibrary:)];
-        viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObject:button];
+        viewController.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:button];
         viewController.navigationItem.title = @"Take Photo";
         viewController.navigationController.navigationBarHidden = NO;
     }
+    UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(dismissCameraLibrary:)];
+    viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObject:button];
 }
 
-- (void) showCamera: (id) sender {
+- (void)showCamera: (id) sender {
     self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
 }
 
-- (void) showLibrary: (id) sender {
+- (void)showLibrary: (id) sender {
     self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+}
+
+- (void)dismissCameraLibrary: (id) sender {
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - IBAction
