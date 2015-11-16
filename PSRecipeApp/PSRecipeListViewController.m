@@ -7,15 +7,18 @@
 //
 
 #import "PSRecipeListViewController.h"
+#import "PSAddRecipeViewController.h"
 #import "PSRecipesListTableViewCell.h"
 #import "PSRecipeManager.h"
 
 static NSString *const RecipeListCellId = @"Recipe List Cell";
 static NSString *const RecipeIconBlank = @"recipe-icon-blank";
+static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
 
 @interface PSRecipeListViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic) PSRecipe *currentRecipe;
 @end
 
 @implementation PSRecipeListViewController
@@ -39,8 +42,11 @@ static NSString *const RecipeIconBlank = @"recipe-icon-blank";
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:ToEditRecipe]) {
+        PSAddRecipeViewController *vc = [segue destinationViewController];
+        vc.isEditing = YES;
+        vc.recipe = self.currentRecipe;
+    }
 }
 
 - (IBAction)unwindToRecipeListViewController:(UIStoryboardSegue *)unwindSegue {
@@ -73,6 +79,8 @@ static NSString *const RecipeIconBlank = @"recipe-icon-blank";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    self.currentRecipe = [[PSRecipeManager sharedManager] getRecipes][indexPath.row];
+    [self performSegueWithIdentifier:ToEditRecipe sender:self];
 }
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {

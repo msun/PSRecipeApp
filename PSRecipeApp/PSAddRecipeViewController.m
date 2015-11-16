@@ -21,7 +21,6 @@ static NSString *const UnwindToRecipesListSegue = @"unwindFromAddRecipeToRecipeL
 
 @interface PSAddRecipeViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic) PSRecipe *recipe;
 @end
 
 @implementation PSAddRecipeViewController
@@ -38,16 +37,28 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
 
 #pragma mark - Lifecycle
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        _isEditing = NO;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.recipe = [[PSRecipe alloc] init];
-    self.recipe.name = @"";
-    self.recipe.desc = @"";
-    self.recipe.images = [[NSMutableArray alloc] init];
-    self.recipe.minutes = 0;
-    self.recipe.steps = [[NSMutableArray alloc] initWithObjects:@"", nil];
-    self.recipe.ingredients = [[NSMutableArray alloc] initWithObjects:@"", nil];
+    if (self.isEditing) {
+        self.navigationItem.title = @"Edit Recipe";
+    } else {
+        self.recipe = [[PSRecipe alloc] init];
+        self.recipe.name = @"";
+        self.recipe.desc = @"";
+        self.recipe.images = [[NSMutableArray alloc] init];
+        self.recipe.minutes = 0;
+        self.recipe.steps = [[NSMutableArray alloc] initWithObjects:@"", nil];
+        self.recipe.ingredients = [[NSMutableArray alloc] initWithObjects:@"", nil];
+    }
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -62,7 +73,9 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:UnwindToRecipesListSegue]) {
-        [[PSRecipeManager sharedManager] addRecipe:self.recipe];
+        if (self.isEditing == NO) {
+            [[PSRecipeManager sharedManager] addRecipe:self.recipe];
+        }
     } else if ([[segue identifier] isEqualToString:ToImagesSegue]) {
         PSImagesViewController *vc = [segue destinationViewController];
         vc.recipe = self.recipe;

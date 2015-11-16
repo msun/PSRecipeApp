@@ -92,13 +92,14 @@
                     <navigationItem key="navigationItem" title="Recipes" id="V3S-UD-eGm">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="fKx-Zg-FAg">
                             <connections>
-                                <segue destination="WTi-nT-Fxd" kind="show" id="LSw-OA-9yQ"/>
+                                <segue destination="WTi-nT-Fxd" kind="show" identifier="RecipesListToAddRecipeSegue" id="LSw-OA-9yQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchField" destination="PAX-JX-BGM" id="BiI-tz-z0t"/>
                         <outlet property="tableView" destination="sgv-ea-AnR" id="iGN-Ou-jKc"/>
+                        <segue destination="WTi-nT-Fxd" kind="show" identifier="RecipesListToEditRecipeSegue" id="1yA-0X-7vg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xba-uc-ilr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -314,4 +315,7 @@
             <point key="canvasLocation" x="116" y="1160"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="1yA-0X-7vg"/>
+    </inferredMetricsTieBreakers>
 </document>

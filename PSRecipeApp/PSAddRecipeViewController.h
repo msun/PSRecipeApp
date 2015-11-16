@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class PSRecipe;
+
 @interface PSAddRecipeViewController : UIViewController
+
+@property (nonatomic) PSRecipe *recipe;
+@property (nonatomic, assign) BOOL isEditing;
 
 @end
