@@ -127,29 +127,14 @@
 		3424316F1BF82263001A4763 /* PSRecipeApp */ = {
 			isa = PBXGroup;
 			children = (
+				3468106C1BF9AD000031C532 /* Models */,
+				3468106B1BF9ACDC0031C532 /* Views */,
+				3468106A1BF9ACBC0031C532 /* Controllers */,
 				342431731BF82263001A4763 /* AppDelegate.h */,
 				342431741BF82263001A4763 /* AppDelegate.m */,
 				342431791BF82263001A4763 /* Main.storyboard */,
-				342431AC1BF82BEA001A4763 /* PSAddRecipeViewController.h */,
-				342431AD1BF82BEA001A4763 /* PSAddRecipeViewController.m */,
-				342431B21BF837C0001A4763 /* PSAddRowTableViewCell.h */,
-				342431B31BF837C0001A4763 /* PSAddRowTableViewCell.m */,
-				342431C11BF92705001A4763 /* PSImageTableViewCell.h */,
-				342431C21BF92705001A4763 /* PSImageTableViewCell.m */,
-				342431BE1BF91DAA001A4763 /* PSImagesViewController.h */,
-				342431BF1BF91DAA001A4763 /* PSImagesViewController.m */,
-				342431A61BF82290001A4763 /* PSRecipe.h */,
-				342431A71BF82290001A4763 /* PSRecipe.m */,
-				342431B81BF8753F001A4763 /* PSRecipesListTableViewCell.h */,
-				342431B91BF8753F001A4763 /* PSRecipesListTableViewCell.m */,
-				342431A91BF82510001A4763 /* PSRecipeListViewController.h */,
-				342431AA1BF82510001A4763 /* PSRecipeListViewController.m */,
-				342431B51BF86CF0001A4763 /* PSRecipeManager.h */,
-				342431B61BF86CF0001A4763 /* PSRecipeManager.m */,
-				342431AF1BF837AC001A4763 /* PSTextFieldTableViewCell.h */,
-				342431B01BF837AC001A4763 /* PSTextFieldTableViewCell.m */,
-				3424317F1BF82263001A4763 /* Assets.xcassets */,
 				342431811BF82263001A4763 /* LaunchScreen.storyboard */,
+				3424317F1BF82263001A4763 /* Assets.xcassets */,
 				342431841BF82263001A4763 /* Info.plist */,
 				3424317C1BF82263001A4763 /* PSRecipeApp.xcdatamodeld */,
 				342431701BF82263001A4763 /* Supporting Files */,
@@ -181,6 +166,45 @@
 				3424319A1BF82263001A4763 /* Info.plist */,
 			);
 			path = PSRecipeAppUITests;
+			sourceTree = "<group>";
+		};
+		3468106A1BF9ACBC0031C532 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				342431AC1BF82BEA001A4763 /* PSAddRecipeViewController.h */,
+				342431AD1BF82BEA001A4763 /* PSAddRecipeViewController.m */,
+				342431BE1BF91DAA001A4763 /* PSImagesViewController.h */,
+				342431BF1BF91DAA001A4763 /* PSImagesViewController.m */,
+				342431A91BF82510001A4763 /* PSRecipeListViewController.h */,
+				342431AA1BF82510001A4763 /* PSRecipeListViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		3468106B1BF9ACDC0031C532 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				342431B21BF837C0001A4763 /* PSAddRowTableViewCell.h */,
+				342431B31BF837C0001A4763 /* PSAddRowTableViewCell.m */,
+				342431C11BF92705001A4763 /* PSImageTableViewCell.h */,
+				342431C21BF92705001A4763 /* PSImageTableViewCell.m */,
+				342431B81BF8753F001A4763 /* PSRecipesListTableViewCell.h */,
+				342431B91BF8753F001A4763 /* PSRecipesListTableViewCell.m */,
+				342431AF1BF837AC001A4763 /* PSTextFieldTableViewCell.h */,
+				342431B01BF837AC001A4763 /* PSTextFieldTableViewCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		3468106C1BF9AD000031C532 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				342431A61BF82290001A4763 /* PSRecipe.h */,
+				342431A71BF82290001A4763 /* PSRecipe.m */,
+				342431B51BF86CF0001A4763 /* PSRecipeManager.h */,
+				342431B61BF86CF0001A4763 /* PSRecipeManager.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
