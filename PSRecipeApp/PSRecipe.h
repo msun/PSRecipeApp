@@ -12,9 +12,9 @@
 
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *desc;
+@property (nonatomic) NSMutableArray *images; // [UIImage]
 @property (nonatomic) NSInteger minutes;
 @property (nonatomic) NSMutableArray *steps; // [NSString]
 @property (nonatomic) NSMutableArray *ingredients; // [NSString]
-@property (nonatomic) NSMutableArray *images; // [UIImage]
 
 @end

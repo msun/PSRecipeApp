@@ -22,6 +22,8 @@
 		342431B41BF837C0001A4763 /* PSAddRowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431B31BF837C0001A4763 /* PSAddRowTableViewCell.m */; };
 		342431B71BF86CF0001A4763 /* PSRecipeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431B61BF86CF0001A4763 /* PSRecipeManager.m */; };
 		342431BA1BF8753F001A4763 /* PSRecipesListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431B91BF8753F001A4763 /* PSRecipesListTableViewCell.m */; };
+		342431C01BF91DAA001A4763 /* PSImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431BF1BF91DAA001A4763 /* PSImagesViewController.m */; };
+		342431C31BF92705001A4763 /* PSImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342431C21BF92705001A4763 /* PSImageTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,10 @@
 		342431B61BF86CF0001A4763 /* PSRecipeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSRecipeManager.m; sourceTree = "<group>"; };
 		342431B81BF8753F001A4763 /* PSRecipesListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRecipesListTableViewCell.h; sourceTree = "<group>"; };
 		342431B91BF8753F001A4763 /* PSRecipesListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSRecipesListTableViewCell.m; sourceTree = "<group>"; };
+		342431BE1BF91DAA001A4763 /* PSImagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImagesViewController.h; sourceTree = "<group>"; };
+		342431BF1BF91DAA001A4763 /* PSImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImagesViewController.m; sourceTree = "<group>"; };
+		342431C11BF92705001A4763 /* PSImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageTableViewCell.h; sourceTree = "<group>"; };
+		342431C21BF92705001A4763 /* PSImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +134,10 @@
 				342431AD1BF82BEA001A4763 /* PSAddRecipeViewController.m */,
 				342431B21BF837C0001A4763 /* PSAddRowTableViewCell.h */,
 				342431B31BF837C0001A4763 /* PSAddRowTableViewCell.m */,
+				342431C11BF92705001A4763 /* PSImageTableViewCell.h */,
+				342431C21BF92705001A4763 /* PSImageTableViewCell.m */,
+				342431BE1BF91DAA001A4763 /* PSImagesViewController.h */,
+				342431BF1BF91DAA001A4763 /* PSImagesViewController.m */,
 				342431A61BF82290001A4763 /* PSRecipe.h */,
 				342431A71BF82290001A4763 /* PSRecipe.m */,
 				342431B81BF8753F001A4763 /* PSRecipesListTableViewCell.h */,
@@ -309,9 +319,11 @@
 				342431751BF82263001A4763 /* AppDelegate.m in Sources */,
 				342431721BF82263001A4763 /* main.m in Sources */,
 				342431AB1BF82510001A4763 /* PSRecipeListViewController.m in Sources */,
+				342431C31BF92705001A4763 /* PSImageTableViewCell.m in Sources */,
 				342431A81BF82290001A4763 /* PSRecipe.m in Sources */,
 				342431AE1BF82BEA001A4763 /* PSAddRecipeViewController.m in Sources */,
 				342431B71BF86CF0001A4763 /* PSRecipeManager.m in Sources */,
+				342431C01BF91DAA001A4763 /* PSImagesViewController.m in Sources */,
 				342431B11BF837AC001A4763 /* PSTextFieldTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -538,6 +550,7 @@
 				3424319F1BF82263001A4763 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		342431A01BF82263001A4763 /* Build configuration list for PBXNativeTarget "PSRecipeAppTests" */ = {
 			isa = XCConfigurationList;
@@ -546,6 +559,7 @@
 				342431A21BF82263001A4763 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		342431A31BF82263001A4763 /* Build configuration list for PBXNativeTarget "PSRecipeAppUITests" */ = {
 			isa = XCConfigurationList;
@@ -554,6 +568,7 @@
 				342431A51BF82263001A4763 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

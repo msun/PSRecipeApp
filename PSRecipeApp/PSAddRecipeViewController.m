@@ -8,12 +8,16 @@
 
 #import "PSAddRecipeViewController.h"
 #import "PSAddRowTableViewCell.h"
+#import "PSImagesViewController.h"
 #import "PSRecipe.h"
 #import "PSRecipeManager.h"
 #import "PSTextFieldTableViewCell.h"
 
 static NSString *const TextFieldCellId = @"Text Field Cell";
 static NSString *const AddRowCellId = @"Add Row Cell";
+static NSString *const ImagesCellId = @"Images Cell";
+static NSString *const ToImagesSegue = @"AddRecipeToImagesSegue";
+static NSString *const UnwindToRecipesListSegue = @"unwindFromAddRecipeToRecipeList";
 
 @interface PSAddRecipeViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -25,6 +29,7 @@ static NSString *const AddRowCellId = @"Add Row Cell";
 typedef NS_ENUM(NSInteger, RecipeSection) {
     RecipeSectionName,
     RecipeSectionDescription,
+    RecipeSectionImages,
     RecipeSectionMinutes,
     RecipeSectionSteps,
     RecipeSectionIngredients,
@@ -39,6 +44,7 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
     self.recipe = [[PSRecipe alloc] init];
     self.recipe.name = @"";
     self.recipe.desc = @"";
+    self.recipe.images = [[NSMutableArray alloc] init];
     self.recipe.minutes = 0;
     self.recipe.steps = [[NSMutableArray alloc] initWithObjects:@"", nil];
     self.recipe.ingredients = [[NSMutableArray alloc] initWithObjects:@"", nil];
@@ -55,8 +61,11 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"unwindFromAddRecipeToRecipeList"]) {
+    if ([segue.identifier isEqualToString:UnwindToRecipesListSegue]) {
         [[PSRecipeManager sharedManager] addRecipe:self.recipe];
+    } else if ([[segue identifier] isEqualToString:ToImagesSegue]) {
+        PSImagesViewController *vc = [segue destinationViewController];
+        vc.recipe = self.recipe;
     }
 }
 
@@ -70,6 +79,7 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
     switch (indexPath.section) {
         case RecipeSectionName:        self.recipe.name = textField.text; return;
         case RecipeSectionDescription: self.recipe.desc = textField.text; return;
+        case RecipeSectionImages:      return;
         case RecipeSectionMinutes:     self.recipe.minutes = [textField.text intValue]; return;
         case RecipeSectionSteps:       self.recipe.steps[indexPath.row] = textField.text; return;
         case RecipeSectionIngredients: self.recipe.ingredients[indexPath.row] = textField.text; return;
@@ -98,6 +108,10 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
             PSTextFieldTableViewCell *cell = [self dequeuePSTextFieldTableViewCellForIndexPath:indexPath];
             cell.label.text = @"Description";
             cell.textField.text = self.recipe.desc;
+            return cell;
+        }
+        case RecipeSectionImages: {
+            UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ImagesCellId forIndexPath:indexPath];
             return cell;
         }
         case RecipeSectionMinutes: {
@@ -141,6 +155,7 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
     switch (section) {
         case RecipeSectionName: return 1;
         case RecipeSectionDescription: return 1;
+        case RecipeSectionImages: return 1;
         case RecipeSectionMinutes: return 1;
         case RecipeSectionSteps: return self.recipe.steps.count + 1;
         case RecipeSectionIngredients: return self.recipe.ingredients.count + 1;
@@ -176,6 +191,9 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
     [self.view endEditing:YES];
     
     switch (indexPath.section) {
+        case RecipeSectionImages:
+            [self performSegueWithIdentifier:ToImagesSegue sender:self];
+            break;
         case RecipeSectionSteps:
             if (indexPath.row == self.recipe.steps.count) {
                 [self.recipe.steps addObject:@""];
@@ -196,8 +214,10 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case RecipeSectionSteps:
+            if (indexPath.row >= self.recipe.steps.count) return @[];
             break;
         case RecipeSectionIngredients:
+            if (indexPath.row >= self.recipe.steps.count) return @[];
             break;
         default:
             return @[];
@@ -208,20 +228,16 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
         handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
             switch (indexPath.section) {
                 case RecipeSectionSteps:
-                    if (indexPath.row >= self.recipe.steps.count) break;
                     [self.recipe.steps removeObjectAtIndex:indexPath.row];
-                    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                    [self.tableView reloadData];
                     break;
                 case RecipeSectionIngredients:
-                    if (indexPath.row >= self.recipe.ingredients.count) break;
                     [self.recipe.ingredients removeObjectAtIndex:indexPath.row];
-                    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                    [self.tableView reloadData];
                     break;
                 default:
                     break;
             }
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView reloadData];
     }];
     
     return @[deleteAction];
