@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -24,30 +25,53 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sgv-ea-AnR">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sgv-ea-AnR">
                                 <rect key="frame" x="0.0" y="110" width="600" height="490"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Recipe List Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Recipe List Cell" id="CXe-F0-78j" customClass="PSRecipesListTableViewCell">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Recipe List Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Recipe List Cell" rowHeight="80" id="CXe-F0-78j" customClass="PSRecipesListTableViewCell">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CXe-F0-78j" id="nfB-BN-koh">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8nm-vq-qOE">
-                                                    <rect key="frame" x="8" y="11" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2d5-Qt-ibN">
+                                                    <rect key="frame" x="8" y="8" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="2d5-Qt-ibN" secondAttribute="height" multiplier="1:1" id="1C8-yL-tSq"/>
+                                                        <constraint firstAttribute="height" constant="60" id="dwQ-hE-a3C"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recipe Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8nm-vq-qOE">
+                                                    <rect key="frame" x="76" y="8" width="516" height="20"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Recipe Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6a-c7-kKV">
+                                                    <rect key="frame" x="76" y="36" width="516" height="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="8nm-vq-qOE" firstAttribute="centerY" secondItem="nfB-BN-koh" secondAttribute="centerY" id="5Yx-gB-WDj"/>
-                                                <constraint firstItem="8nm-vq-qOE" firstAttribute="leading" secondItem="nfB-BN-koh" secondAttribute="leadingMargin" id="SmQ-Vg-Xq2"/>
+                                                <constraint firstItem="2d5-Qt-ibN" firstAttribute="leadingMargin" secondItem="nfB-BN-koh" secondAttribute="leadingMargin" constant="8" id="7Vc-x2-Hkb"/>
+                                                <constraint firstItem="8nm-vq-qOE" firstAttribute="leading" secondItem="2d5-Qt-ibN" secondAttribute="trailing" constant="8" symbolic="YES" id="AUD-bv-jJC"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="2d5-Qt-ibN" secondAttribute="bottom" constant="8" id="DDd-Wf-sD5"/>
+                                                <constraint firstItem="G6a-c7-kKV" firstAttribute="leading" secondItem="8nm-vq-qOE" secondAttribute="leading" id="Etl-jS-6cu"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="G6a-c7-kKV" secondAttribute="bottom" constant="8" id="LYY-qM-1oh"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="8nm-vq-qOE" secondAttribute="trailingMargin" constant="8" id="aHQ-y1-obH"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="G6a-c7-kKV" secondAttribute="trailingMargin" constant="8" id="coA-pb-tm1"/>
+                                                <constraint firstItem="G6a-c7-kKV" firstAttribute="top" secondItem="8nm-vq-qOE" secondAttribute="bottom" constant="8" symbolic="YES" id="lcS-dz-P2n"/>
+                                                <constraint firstItem="2d5-Qt-ibN" firstAttribute="top" secondItem="nfB-BN-koh" secondAttribute="top" constant="8" id="u5c-qz-awk"/>
+                                                <constraint firstItem="8nm-vq-qOE" firstAttribute="top" secondItem="2d5-Qt-ibN" secondAttribute="top" id="yRM-ie-7s6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="photoView" destination="2d5-Qt-ibN" id="To0-8h-lrO"/>
+                                            <outlet property="recipeDescriptionLabel" destination="G6a-c7-kKV" id="GHh-SC-2Jq"/>
                                             <outlet property="recipeNameLabel" destination="8nm-vq-qOE" id="G4u-bD-Xa6"/>
                                         </connections>
                                     </tableViewCell>

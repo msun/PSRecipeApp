@@ -10,6 +10,8 @@
 
 @interface PSRecipesListTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *photoView;
 @property (weak, nonatomic) IBOutlet UILabel *recipeNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *recipeDescriptionLabel;
 
 @end

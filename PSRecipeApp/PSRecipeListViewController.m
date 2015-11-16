@@ -11,6 +11,7 @@
 #import "PSRecipeManager.h"
 
 static NSString *const RecipeListCellId = @"Recipe List Cell";
+static NSString *const RecipeIconBlank = @"recipe-icon-blank";
 
 @interface PSRecipeListViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
@@ -27,6 +28,8 @@ static NSString *const RecipeListCellId = @"Recipe List Cell";
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.estimatedRowHeight = self.tableView.rowHeight;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,7 +54,9 @@ static NSString *const RecipeListCellId = @"Recipe List Cell";
     PSRecipesListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:RecipeListCellId forIndexPath:indexPath];
     PSRecipe *recipe = [[[PSRecipeManager sharedManager] getRecipes] objectAtIndex:indexPath.row];
     
+    cell.photoView.image = (recipe.images.count >= 1) ? [recipe.images firstObject] : [UIImage imageNamed:RecipeIconBlank];
     cell.recipeNameLabel.text = recipe.name;
+    cell.recipeDescriptionLabel.text = recipe.desc;
 
     return cell;
 }
@@ -80,6 +85,14 @@ static NSString *const RecipeListCellId = @"Recipe List Cell";
     }];
     
     return @[deleteAction];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return self.tableView.rowHeight;;
 }
 
 @end
