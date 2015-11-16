@@ -30,11 +30,6 @@ static NSString *const ImageCellId = @"Image Cell";
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
-    self.imagePicker = [[UIImagePickerController alloc] init];
-    self.imagePicker.delegate = self;
-    self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    self.imagePicker.allowsEditing = YES;
 
     if (self.recipe.images.count >= 3) {
         self.addImageButton.enabled = NO;
@@ -134,6 +129,18 @@ static NSString *const ImageCellId = @"Image Cell";
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         [self presentViewController:self.imagePicker animated:YES completion:NULL];
     }
+}
+
+#pragma mark - Getters
+
+- (UIImagePickerController *)imagePicker {
+    if (_imagePicker == nil) {
+        _imagePicker = [[UIImagePickerController alloc] init];
+        _imagePicker.delegate = self;
+        _imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        _imagePicker.allowsEditing = YES;
+    }
+    return _imagePicker;
 }
 
 @end
