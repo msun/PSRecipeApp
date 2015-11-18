@@ -43,36 +43,15 @@
     [recipe save];
 }
 
-- (void)deleteRecipe:(PSRecipe *)recipe {
+- (void)eraseRecipe:(PSRecipe *)recipe {
     [self.recipes removeObject:recipe];
     [recipe erase];
 }
 
-- (void)loadRecipes { // [NSManagedObject] of entity Recipe
+- (NSArray *)fetchManagedObjectsWithEntityDescription:(NSEntityDescription *)entityDescription {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:[PSRecipe entityDescription]];
-    NSError *fetchError = nil;
-    NSArray *managedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
-    
-    if (fetchError) {
-        NSLog(@"Unable to execute fetch request.");
-        NSLog(@"%@, %@", fetchError, fetchError.localizedDescription);
-        return;
-    }
-    
-    for (NSManagedObject *managedObject in managedObjects) {
-        PSRecipe *recipe = [[PSRecipe alloc] initWithManagedObject:managedObject];
-        [self.recipes addObject:recipe];
-    }
-}
-
-- (PSRecipe *)getPartial {
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:[PSRecipe partialEntityDescription]];
+    [fetchRequest setEntity:entityDescription];
     NSError *fetchError = nil;
     NSArray *managedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
     
@@ -82,6 +61,19 @@
         return nil;
     }
     
+    return managedObjects;
+}
+
+- (void)loadRecipes { // [NSManagedObject] of entity Recipe
+    NSArray *managedObjects = [self fetchManagedObjectsWithEntityDescription:[PSRecipe entityDescription]];
+    for (NSManagedObject *managedObject in managedObjects) {
+        PSRecipe *recipe = [[PSRecipe alloc] initWithManagedObject:managedObject];
+        [self.recipes addObject:recipe];
+    }
+}
+
+- (PSRecipe *)getPartial {
+    NSArray *managedObjects = [self fetchManagedObjectsWithEntityDescription:[PSRecipe partialEntityDescription]];
     if (managedObjects.count <= 0) {
         NSLog(@"No partial found");
         return nil;
@@ -91,25 +83,15 @@
     }
 }
 
-- (void)deletePartials {
-    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:[PSRecipe partialEntityDescription]];
-    NSError *fetchError = nil;
-    NSArray *managedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
-    
-    if (fetchError) {
-        NSLog(@"Unable to execute fetch request.");
-        NSLog(@"%@, %@", fetchError, fetchError.localizedDescription);
-        return;
-    }
+- (void)erasePartials {
+    NSArray *managedObjects = [self fetchManagedObjectsWithEntityDescription:[PSRecipe partialEntityDescription]];
     
     for (NSManagedObject *managedObject in managedObjects) {
         [managedObject.managedObjectContext deleteObject:managedObject];
     }
 
     NSError *deleteError = nil;
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     if (![appDelegate.managedObjectContext save:&deleteError]) {
         NSLog(@"Unable to save managed object context.");
         NSLog(@"%@, %@", deleteError, deleteError.localizedDescription);

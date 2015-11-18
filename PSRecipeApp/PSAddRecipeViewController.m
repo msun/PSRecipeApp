@@ -51,7 +51,7 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
 
 - (void)applicationDidEnterBackground:(NSNotification *) notification {
     NSLog(@"applicationDidEnterBackground");
-    [[PSRecipeManager sharedManager] deletePartials];
+    [[PSRecipeManager sharedManager] erasePartials];
     [self.recipe savePartial];
     NSLog(@"applicationDidEnterBackground2");
 }
@@ -79,10 +79,6 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
                                              selector:@selector(applicationDidEnterBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:[UIApplication sharedApplication]];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - Navigation

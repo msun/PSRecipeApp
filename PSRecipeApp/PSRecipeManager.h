@@ -16,9 +16,9 @@
 - (void)loadRecipes;
 - (NSArray *)getRecipes;
 - (void)addRecipe:(PSRecipe *)recipe;
-- (void)deleteRecipe:(PSRecipe *)recipe;
+- (void)eraseRecipe:(PSRecipe *)recipe;
 
 - (PSRecipe *)getPartial;
-- (void)deletePartials;
+- (void)erasePartials;
 
 @end

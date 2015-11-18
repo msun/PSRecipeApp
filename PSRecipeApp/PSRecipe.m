@@ -31,10 +31,28 @@
     return [NSEntityDescription entityForName:@"PartialRecipe" inManagedObjectContext:appDelegate.managedObjectContext];
 }
 
+- (PSRecipe *)initWithManagedObject:(NSManagedObject *)managedObject {
+    self = [super init];
+    if (self) {
+        self.identifier = [managedObject valueForKey:@"identifier"];
+        self.name = [managedObject valueForKey:@"name"];
+        self.desc = [managedObject valueForKey:@"desc"];
+        NSNumber *number = [managedObject valueForKey:@"minutes"];
+        self.minutes = [number integerValue];
+        NSData *data = [managedObject valueForKey:@"images"];
+        self.images = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        data = [managedObject valueForKey:@"steps"];
+        self.steps = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        data = [managedObject valueForKey:@"ingredients"];
+        self.ingredients = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    return self;
+}
+
 - (NSManagedObject *)fetchWithEntityDescription:(NSEntityDescription *)entityDescription {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     NSManagedObject *managedObject;
-
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     [fetchRequest setEntity:entityDescription];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"identifier", self.identifier];
@@ -54,26 +72,8 @@
         NSLog(@"fetchResult: %@", fetchResult);
         managedObject = [fetchResult firstObject];
     }
-
+    
     return managedObject;
-}
-
-- (PSRecipe *)initWithManagedObject:(NSManagedObject *)managedObject {
-    self = [super init];
-    if (self) {
-        self.identifier = [managedObject valueForKey:@"identifier"];
-        self.name = [managedObject valueForKey:@"name"];
-        self.desc = [managedObject valueForKey:@"desc"];
-        NSNumber *number = [managedObject valueForKey:@"minutes"];
-        self.minutes = [number integerValue];
-        NSData *data = [managedObject valueForKey:@"images"];
-        self.images = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        data = [managedObject valueForKey:@"steps"];
-        self.steps = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        data = [managedObject valueForKey:@"ingredients"];
-        self.ingredients = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    }
-    return self;
 }
 
 - (void)saveWithEntityDescription:(NSEntityDescription *)entityDescription {

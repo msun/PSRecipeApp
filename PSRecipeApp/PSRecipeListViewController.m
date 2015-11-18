@@ -44,7 +44,7 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
 
 - (void)viewDidAppear:(BOOL)animated {
     if (self.currentRecipe) {
-        [[PSRecipeManager sharedManager] deletePartials];
+        [[PSRecipeManager sharedManager] erasePartials];
         [self performSegueWithIdentifier:ToAddRecipe sender:self];
     } else {
         [self updateSearchRecipesWithQuery:self.searchField.text];
@@ -127,7 +127,7 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
                                                                           handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         //[self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         PSRecipe *recipe = self.searchRecipes[indexPath.row];
-        [[PSRecipeManager sharedManager] deleteRecipe:recipe];
+        [[PSRecipeManager sharedManager] eraseRecipe:recipe];
         [self updateSearchRecipesWithQuery:self.searchField.text];
     }];
     
