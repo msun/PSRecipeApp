@@ -13,6 +13,7 @@
 
 + (id)sharedManager;
 
+- (void)loadRecipes;
 - (NSArray *)getRecipes;
 - (void)addRecipe:(PSRecipe *)recipe;
 - (void)deleteRecipe:(PSRecipe *)recipe;

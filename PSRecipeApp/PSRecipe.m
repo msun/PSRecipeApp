@@ -7,7 +7,119 @@
 //
 
 #import "PSRecipe.h"
+#import <CoreData/CoreData.h>
+#import "AppDelegate.h"
 
 @implementation PSRecipe
+
++(NSString *)createRecipeIdentifier
+{
+    CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
+    NSString * uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
+    CFRelease(newUniqueId);
+    
+    return uuidString;
+}
+
++ (NSEntityDescription *)entityDescription {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    return [NSEntityDescription entityForName:@"Recipe" inManagedObjectContext:appDelegate.managedObjectContext];
+}
+
+- (NSManagedObject *)fetch {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSManagedObject *managedObject;
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:[[self class] entityDescription]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"identifier", self.identifier];
+    [fetchRequest setPredicate:predicate];
+    NSError *fetchError = nil;
+    NSArray *fetchResult = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
+    
+    if (fetchError) {
+        NSLog(@"Unable to execute fetch request.");
+        NSLog(@"%@, %@", fetchError, fetchError.localizedDescription);
+        return nil;
+    }
+    
+    if (fetchResult.count <= 0) {
+        NSLog(@"No recipe fetched");
+    } else {
+        NSLog(@"fetchResult: %@", fetchResult);
+        managedObject = [fetchResult firstObject];
+    }
+
+    return managedObject;
+}
+
+- (PSRecipe *)initWithManagedObject:(NSManagedObject *)managedObject {
+    self = [super init];
+    if (self) {
+        self.identifier = [managedObject valueForKey:@"identifier"];
+        self.name = [managedObject valueForKey:@"name"];
+        self.desc = [managedObject valueForKey:@"desc"];
+        NSNumber *number = [managedObject valueForKey:@"minutes"];
+        self.minutes = [number integerValue];
+        NSData *data = [managedObject valueForKey:@"images"];
+        self.images = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        data = [managedObject valueForKey:@"steps"];
+        self.steps = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        data = [managedObject valueForKey:@"ingredients"];
+        self.ingredients = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    return self;
+}
+
+- (void)save {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Recipe" inManagedObjectContext:appDelegate.managedObjectContext];
+
+    NSManagedObject *managedObject;
+    if (self.identifier.length == 0) {
+        managedObject = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:appDelegate.managedObjectContext];
+        self.identifier = [[self class] createRecipeIdentifier];
+        [managedObject setValue:self.identifier forKey:@"identifier"];
+    } else {
+        managedObject = [self fetch];
+        if (managedObject == nil) {
+            NSLog(@"Save: Could not fetch");
+            return;
+        }
+    }
+
+    [managedObject setValue:self.name forKey:@"name"];
+    [managedObject setValue:self.desc forKey:@"desc"];
+    NSNumber *number = [NSNumber numberWithInteger:self.minutes];
+    [managedObject setValue:number forKey:@"minutes"];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.images];
+    [managedObject setValue:data forKey:@"images"];
+    data = [NSKeyedArchiver archivedDataWithRootObject:self.steps];
+    [managedObject setValue:data forKey:@"steps"];
+    data = [NSKeyedArchiver archivedDataWithRootObject:self.ingredients];
+    [managedObject setValue:data forKey:@"ingredients"];
+    
+    NSError *saveError = nil;
+    if (![managedObject.managedObjectContext save:&saveError]) {
+        NSLog(@"Can't save managedObject: %@, %@", saveError, saveError.localizedDescription);
+    }
+}
+
+- (void)erase {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSManagedObject *managedObject = [self fetch];
+    if (managedObject == nil) {
+        NSLog(@"Erase: Could not fetch");
+        return;
+    }
+    
+    [appDelegate.managedObjectContext deleteObject:managedObject];
+    
+    NSError *deleteError = nil;
+    if (![managedObject.managedObjectContext save:&deleteError]) {
+        NSLog(@"Unable to save managed object context.");
+        NSLog(@"Can't delete managedObject: %@, %@", deleteError, deleteError.localizedDescription);
+    }
+}
 
 @end

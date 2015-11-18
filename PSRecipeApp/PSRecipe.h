@@ -8,13 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
+@class NSManagedObject;
+@class NSEntityDescription;
+
 @interface PSRecipe : NSObject
 
+@property (nonatomic) NSString *identifier;
 @property (nonatomic) NSString *name;
 @property (nonatomic) NSString *desc;
 @property (nonatomic) NSMutableArray *images; // [UIImage]
 @property (nonatomic) NSInteger minutes;
 @property (nonatomic) NSMutableArray *steps; // [NSString]
 @property (nonatomic) NSMutableArray *ingredients; // [NSString]
+
++ (NSEntityDescription *)entityDescription;
+- (PSRecipe *)initWithManagedObject:(NSManagedObject *)managedObject;
+
+- (void)save;
+- (void)erase;
 
 @end

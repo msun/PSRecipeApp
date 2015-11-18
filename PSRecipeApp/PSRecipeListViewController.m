@@ -34,6 +34,8 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.estimatedRowHeight = self.tableView.rowHeight;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    [[PSRecipeManager sharedManager] loadRecipes];
 }
 
 - (void)didReceiveMemoryWarning {

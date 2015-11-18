@@ -73,7 +73,9 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:UnwindToRecipesListSegue]) {
-        if (self.isEditing == NO) {
+        if (self.isEditing) {
+            [self.recipe save];
+        } else {
             [[PSRecipeManager sharedManager] addRecipe:self.recipe];
         }
     } else if ([[segue identifier] isEqualToString:ToImagesSegue]) {

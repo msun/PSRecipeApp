@@ -7,6 +7,8 @@
 //
 
 #import "PSRecipeManager.h"
+#import <CoreData/CoreData.h>
+#import "AppDelegate.h"
 
 @interface PSRecipeManager ()
 
@@ -38,10 +40,32 @@
 
 - (void)addRecipe:(PSRecipe *)recipe {
     [self.recipes addObject:recipe];
+    [recipe save];
 }
 
 - (void)deleteRecipe:(PSRecipe *)recipe {
     [self.recipes removeObject:recipe];
+    [recipe erase];
+}
+
+- (void)loadRecipes { // [NSManagedObject] of entity Recipe
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:[PSRecipe entityDescription]];
+    NSError *fetchError = nil;
+    NSArray *managedObjects = [appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:&fetchError];
+    
+    if (fetchError) {
+        NSLog(@"Unable to execute fetch request.");
+        NSLog(@"%@, %@", fetchError, fetchError.localizedDescription);
+        return;
+    }
+    
+    for (NSManagedObject *managedObject in managedObjects) {
+        PSRecipe *recipe = [[PSRecipe alloc] initWithManagedObject:managedObject];
+        [self.recipes addObject:recipe];
+    }
 }
 
 @end
