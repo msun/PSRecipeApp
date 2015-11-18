@@ -79,6 +79,7 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="PAX-JX-BGM" secondAttribute="trailing" id="1X6-RC-urY"/>
                             <constraint firstItem="sgv-ea-AnR" firstAttribute="top" secondItem="PAX-JX-BGM" secondAttribute="bottom" constant="8" symbolic="YES" id="8jT-xE-zif"/>
@@ -88,6 +89,9 @@
                             <constraint firstItem="sgv-ea-AnR" firstAttribute="width" secondItem="Lax-yj-pWm" secondAttribute="width" id="hWT-u4-UUg"/>
                             <constraint firstItem="sgv-ea-AnR" firstAttribute="leading" secondItem="Lax-yj-pWm" secondAttribute="leading" id="wOO-dC-BCa"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="RDA-mi-MJZ" appends="YES" id="dht-xQ-lfU"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Recipes" id="V3S-UD-eGm">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="fKx-Zg-FAg">
@@ -103,6 +107,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xba-uc-ilr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="RDA-mi-MJZ">
+                    <connections>
+                        <action selector="didTap:" destination="RN4-py-8ab" id="3P5-dc-KG7"/>
+                        <outlet property="delegate" destination="RN4-py-8ab" id="8To-cd-zdz"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="928" y="1160"/>
         </scene>
@@ -133,6 +143,9 @@
                                                     <rect key="frame" x="58" y="7" width="534" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="WTi-nT-Fxd" id="Sid-xb-e7d"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URl-sy-a10">
                                                     <rect key="frame" x="8" y="11" width="42" height="21"/>

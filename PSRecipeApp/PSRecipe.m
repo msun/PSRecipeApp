@@ -128,4 +128,33 @@
     }
 }
 
+- (BOOL)matchesSearchQuery:(NSString *)query {
+    NSString *queryString = [query stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    if (queryString.length <= 0) return YES;
+    
+    for (NSString *string in @[self.name,
+                               self.desc,
+                               [NSString stringWithFormat: @"%ld", (long)self.minutes]]) {
+        if ([string containsString:queryString]) return YES;
+    }
+    
+    for (NSString *string in self.steps) {
+        if ([string containsString:queryString]) return YES;
+    }
+    
+    for (NSString *string in self.ingredients) {
+        if ([string containsString:queryString]) return YES;
+    }
+
+    return NO;
+};
+
+@end
+
+@implementation NSString (PSRecipeAdditions)
+- (BOOL)containsString:(NSString *)string {
+    NSRange rng = [self rangeOfString:string options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch | NSWidthInsensitiveSearch];
+    return rng.location != NSNotFound;
+}
 @end

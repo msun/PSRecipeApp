@@ -16,10 +16,11 @@ static NSString *const RecipeIconBlank = @"recipe-icon-blank";
 static NSString *const ToAddRecipe = @"RecipesListToAddRecipeSegue";
 static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
 
-@interface PSRecipeListViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface PSRecipeListViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) PSRecipe *currentRecipe;
+@property (nonatomic) NSMutableArray *searchRecipes;
 @end
 
 @implementation PSRecipeListViewController
@@ -36,17 +37,22 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     [[PSRecipeManager sharedManager] loadRecipes];
+    self.searchField.delegate = self;
+    self.searchRecipes = [[[PSRecipeManager sharedManager] getRecipes] mutableCopy];
     self.currentRecipe = [[PSRecipeManager sharedManager] getPartial];
 }
+
 - (void)viewDidAppear:(BOOL)animated {
     if (self.currentRecipe) {
         [[PSRecipeManager sharedManager] deletePartials];
         [self performSegueWithIdentifier:ToAddRecipe sender:self];
+    } else {
+        [self updateSearchRecipesWithQuery:self.searchField.text];
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.searchField endEditing:YES];
 }
 
 #pragma mark - Navigation
@@ -66,14 +72,27 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
 }
 
 - (IBAction)unwindToRecipeListViewController:(UIStoryboardSegue *)unwindSegue {
-    [self.tableView reloadData];
+
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *query = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    [self updateSearchRecipesWithQuery:query];
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField endEditing:YES];
+    return YES;
 }
 
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PSRecipesListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:RecipeListCellId forIndexPath:indexPath];
-    PSRecipe *recipe = [[[PSRecipeManager sharedManager] getRecipes] objectAtIndex:indexPath.row];
+    PSRecipe *recipe = [self.searchRecipes objectAtIndex:indexPath.row];
     
     cell.photoView.image = (recipe.images.count >= 1) ? [recipe.images firstObject] : [UIImage imageNamed:RecipeIconBlank];
     cell.recipeNameLabel.text = recipe.name;
@@ -83,7 +102,7 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[PSRecipeManager sharedManager] getRecipes].count;
+    return self.searchRecipes.count;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -92,9 +111,13 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
 
 #pragma mark - UITableViewDelegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.searchField endEditing:YES];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-    self.currentRecipe = [[PSRecipeManager sharedManager] getRecipes][indexPath.row];
+    self.currentRecipe = self.searchRecipes[indexPath.row];
     [self performSegueWithIdentifier:ToEditRecipe sender:self];
 }
 
@@ -102,12 +125,38 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive
                                                                             title:@"Delete"
                                                                           handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
-        PSRecipe *recipe = [[PSRecipeManager sharedManager] getRecipes][indexPath.row];
+        //[self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        PSRecipe *recipe = self.searchRecipes[indexPath.row];
         [[PSRecipeManager sharedManager] deleteRecipe:recipe];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self updateSearchRecipesWithQuery:self.searchField.text];
     }];
     
     return @[deleteAction];
+}
+
+#pragma mark UIGestureRecognizerDelegate methods
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return ![touch.view isDescendantOfView:self.tableView];
+}
+
+#pragma mark - IBAction
+
+- (IBAction)didTap:(id)sender {
+    [self.searchField endEditing:YES];
+}
+
+#pragma mark - Misc
+
+- (void)updateSearchRecipesWithQuery:(NSString *)query {
+    self.searchRecipes = [[NSMutableArray alloc] init];
+    NSArray *recipes = [[PSRecipeManager sharedManager] getRecipes];
+    for (PSRecipe *recipe in recipes) {
+        if ([recipe matchesSearchQuery:query]) {
+            [self.searchRecipes addObject:recipe];
+        }
+    }
+    [self.tableView reloadData];
 }
 
 @end

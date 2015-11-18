@@ -28,5 +28,6 @@
 - (void)save;
 - (void)savePartial;
 - (void)erase;
+- (BOOL)matchesSearchQuery:(NSString *)query;
 
 @end

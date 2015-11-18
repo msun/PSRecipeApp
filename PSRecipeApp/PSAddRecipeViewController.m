@@ -274,4 +274,11 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
     return @[deleteAction];
 }
 
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField endEditing:YES];
+    return YES;
+}
+
 @end
