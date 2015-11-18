@@ -37,6 +37,10 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
 
 #pragma mark - Lifecycle
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -45,12 +49,19 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
     return self;
 }
 
+- (void)applicationDidEnterBackground:(NSNotification *) notification {
+    NSLog(@"applicationDidEnterBackground");
+    [[PSRecipeManager sharedManager] deletePartials];
+    [self.recipe savePartial];
+    NSLog(@"applicationDidEnterBackground2");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     if (self.isEditing) {
         self.navigationItem.title = @"Edit Recipe";
-    } else {
+    } else if (self.recipe == nil) {
         self.recipe = [[PSRecipe alloc] init];
         self.recipe.name = @"";
         self.recipe.desc = @"";
@@ -63,6 +74,11 @@ typedef NS_ENUM(NSInteger, RecipeSection) {
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, 220.0)];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidEnterBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:[UIApplication sharedApplication]];
 }
 
 - (void)didReceiveMemoryWarning {

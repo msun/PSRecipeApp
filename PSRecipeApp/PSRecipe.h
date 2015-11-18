@@ -22,9 +22,11 @@
 @property (nonatomic) NSMutableArray *ingredients; // [NSString]
 
 + (NSEntityDescription *)entityDescription;
++ (NSEntityDescription *)partialEntityDescription;
 - (PSRecipe *)initWithManagedObject:(NSManagedObject *)managedObject;
 
 - (void)save;
+- (void)savePartial;
 - (void)erase;
 
 @end

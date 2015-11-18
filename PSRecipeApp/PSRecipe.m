@@ -26,12 +26,17 @@
     return [NSEntityDescription entityForName:@"Recipe" inManagedObjectContext:appDelegate.managedObjectContext];
 }
 
-- (NSManagedObject *)fetch {
++ (NSEntityDescription *)partialEntityDescription {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    return [NSEntityDescription entityForName:@"PartialRecipe" inManagedObjectContext:appDelegate.managedObjectContext];
+}
+
+- (NSManagedObject *)fetchWithEntityDescription:(NSEntityDescription *)entityDescription {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     NSManagedObject *managedObject;
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:[[self class] entityDescription]];
+    [fetchRequest setEntity:entityDescription];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"identifier", self.identifier];
     [fetchRequest setPredicate:predicate];
     NSError *fetchError = nil;
@@ -71,21 +76,14 @@
     return self;
 }
 
-- (void)save {
+- (void)saveWithEntityDescription:(NSEntityDescription *)entityDescription {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Recipe" inManagedObjectContext:appDelegate.managedObjectContext];
 
-    NSManagedObject *managedObject;
-    if (self.identifier.length == 0) {
+    NSManagedObject *managedObject = [self fetchWithEntityDescription:entityDescription];
+    if (managedObject == nil) {
         managedObject = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:appDelegate.managedObjectContext];
         self.identifier = [[self class] createRecipeIdentifier];
         [managedObject setValue:self.identifier forKey:@"identifier"];
-    } else {
-        managedObject = [self fetch];
-        if (managedObject == nil) {
-            NSLog(@"Save: Could not fetch");
-            return;
-        }
     }
 
     [managedObject setValue:self.name forKey:@"name"];
@@ -105,9 +103,17 @@
     }
 }
 
+- (void)save {
+    [self saveWithEntityDescription:[PSRecipe entityDescription]];
+}
+
+- (void)savePartial {
+    [self saveWithEntityDescription:[PSRecipe partialEntityDescription]];
+}
+
 - (void)erase {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    NSManagedObject *managedObject = [self fetch];
+    NSManagedObject *managedObject = [self fetchWithEntityDescription:[PSRecipe entityDescription]];
     if (managedObject == nil) {
         NSLog(@"Erase: Could not fetch");
         return;

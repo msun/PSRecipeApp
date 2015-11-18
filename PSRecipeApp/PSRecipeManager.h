@@ -18,4 +18,7 @@
 - (void)addRecipe:(PSRecipe *)recipe;
 - (void)deleteRecipe:(PSRecipe *)recipe;
 
+- (PSRecipe *)getPartial;
+- (void)deletePartials;
+
 @end

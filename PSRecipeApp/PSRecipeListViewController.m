@@ -36,6 +36,13 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     [[PSRecipeManager sharedManager] loadRecipes];
+    self.currentRecipe = [[PSRecipeManager sharedManager] getPartial];
+}
+- (void)viewDidAppear:(BOOL)animated {
+    if (self.currentRecipe) {
+        [[PSRecipeManager sharedManager] deletePartials];
+        [self performSegueWithIdentifier:ToAddRecipe sender:self];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,11 +53,15 @@ static NSString *const ToEditRecipe = @"RecipesListToEditRecipeSegue";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:ToAddRecipe]) {
-
+        PSAddRecipeViewController *vc = [segue destinationViewController];
+        vc.isEditing = NO;
+        vc.recipe = self.currentRecipe;
+        self.currentRecipe = nil;
     } else if ([segue.identifier isEqualToString:ToEditRecipe]) {
         PSAddRecipeViewController *vc = [segue destinationViewController];
         vc.isEditing = YES;
         vc.recipe = self.currentRecipe;
+        self.currentRecipe = nil;
     }
 }
 
